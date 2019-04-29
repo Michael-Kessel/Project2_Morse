@@ -1,9 +1,10 @@
-/*Coghan Spery
-Micheal Kessel
-Bando Arsene
-Andrew Fuller
-Victor Hernandez
-*/
+// Coghan Spery
+// Micheal Kessel
+// Bando Arsene
+// Andrew Fuller
+// Victor Hernandez
+// Project to Encode 
+
 #include<iostream>
 #include<fstream>
 #include<string>
@@ -449,6 +450,14 @@ void encode(char x) {
 	case '9': cout << "----. "; break;
 	case '0': cout << "----- "; break;
 
+	case '.': cout << ".-.-.- "; break;
+	case ',': cout << "--..-- "; break;
+	case ';': cout << "-.-.-. "; break;
+	case '?': cout << "..--.. "; break;
+	case ':': cout << "---... "; break;
+	case '-': cout << "-....- "; break;
+
+	case '\n': cout << "       "; break;
 	default: cout << "%% ";
 	}
 }
@@ -456,33 +465,20 @@ void encode(char x) {
 
 int main() {
 	ifstream file;
-	string g, b;
+	string file_name;
 	
 	cout << "please enter the name of the file: " << endl;
-	cin >> g;//Name of the file
-	file.open(g);
-	if (file) {  //checks if file is open
-		while (file >> b) { // read file into string
-			cout << b << endl;
-		}
-	}
-	else
-	{
-		cout << "error opening file " << endl; // Error message
-	}
+	cin >> file_name;//Name of the file
+	file.open(file_name);
+	
+	// Add file choice loop (Michael Will do) 
+	
+	// Code for the Execution of all operations involved with Decode
 	Node * Head = new Node; //Creates Head of tree node
 	Head->val = '#'; //Sets Head's value
 	createTree(Head); //Creates Morse tree off of Head
 	Decode(g, Head); //Decodes file
 	
-	while (cin >> g)
-	{
-		for (int i = 0; i > g.length(); i++)
-		{
-			cout << "thing";
-		}
-	}
-	//encode();
 	file.close(); // Closes file
 	system("pause");
 	return 0;
