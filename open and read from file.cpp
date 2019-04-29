@@ -1,3 +1,9 @@
+//Bando Arsene
+//Andrew  Fuller
+//Cogan Spery
+//Victor Hernandez
+//Michael Kessel
+
 #include<iostream>
 #include<fstream>
 #include<string>
