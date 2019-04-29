@@ -116,9 +116,9 @@ int main() {
 	ifstream file;
 	string file_name = "E2MTest1.txt.";
 	file.open(file_name); 
-	char tmp;
 	file >> noskipws; 
-
+	char tmp;
+	
 	while (file >> tmp) {
 		encode(tmp); 
 	}
