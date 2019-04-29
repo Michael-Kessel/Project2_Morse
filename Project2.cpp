@@ -480,10 +480,10 @@ int main() {
 			
 			file.open(file_name);
 			file >> noskipws;
-			char tmp;
+			char temp;
 
-			while (file >> tmp) {
-				encode(tmp);
+			while (file >> temp) {
+				encode(temp);
 			}
 			file.close(); 
 			cout << endl; 
