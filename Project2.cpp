@@ -449,36 +449,62 @@ void encode(char x) {
 	case '8': cout << "---.. "; break;
 	case '9': cout << "----. "; break;
 	case '0': cout << "----- "; break;
-
 	case '.': cout << ".-.-.- "; break;
 	case ',': cout << "--..-- "; break;
 	case ';': cout << "-.-.-. "; break;
 	case '?': cout << "..--.. "; break;
 	case ':': cout << "---... "; break;
 	case '-': cout << "-....- "; break;
+	case '!': cout << "-.-.-- "; break;
+	case '"': cout << ".-..-. "; break; 
+	// case ''': cout << ".----. "; break; 
 
 	case '\n': cout << "       "; break;
 	default: cout << "%% ";
 	}
 }
 
-
 int main() {
 	ifstream file;
-	string file_name;
+	string file_name, tmp;
+	bool loop = true; 
 	
-	cout << "please enter the name of the file: " << endl;
-	cin >> file_name;//Name of the file
-	file.open(file_name);
-	
-	// Add file choice loop (Michael Will do) 
-	
-	// Code for the Execution of all operations involved with Decode
-	Node * Head = new Node; //Creates Head of tree node
-	Head->val = '#'; //Sets Head's value
-	createTree(Head); //Creates Morse tree off of Head
-	Decode(g, Head); //Decodes file
-	
+	cout << "Please specify whether the file will be Encoded or Decoded from Morse Code. " << endl;
+	while (loop == true) {
+		cout << "Type in either (encode), (decode), or (end) to terminate. " << endl;
+
+		cin >> tmp;
+		if (tmp == "encode") {
+			cout << "Please enter the name of the file to Encode: " << endl;
+			cin >> file_name;//Name of the file
+			
+			file.open(file_name);
+			file >> noskipws;
+			char tmp;
+
+			while (file >> tmp) {
+				encode(tmp);
+			}
+			file.close(); 
+			cout << endl; 
+		}
+		
+		else if (tmp == "decode") { // Code for the Execution of all operations involved with Decode
+			cout << "Please enter the name of the file to Decode: " << endl; 
+			cin >> file_name; 
+			Node * Head = new Node; //Creates Head of tree node
+			Head->val = '#'; //Sets Head's value
+			createTree(Head); //Creates Morse tree off of Head
+			Decode(file_name, Head); //Decodes file
+			file.close(); 
+		}
+		else if (tmp == "end") {
+			loop = false;
+		}
+		else {
+			cout << "Please choose only one of the three options" << endl; 
+		}
+	}
 	file.close(); // Closes file
 	system("pause");
 	return 0;
