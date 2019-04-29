@@ -103,13 +103,15 @@ void encode(char x) {
 }
 
 int main() {
-	char message[1000] = "1234567  a message" ; 
-	string test = "Message"; 
-	
-	for (int i = 0; i < test.length(); i++) {
-		encode(message[i]);
-	}
+	ifstream file;
+	string file_name = "new_test.txt.";
+	file.open(file_name); 
+	char tmp;
 
+	while (file >> tmp) {
+		encode(tmp); 
+	}
+		
 	cout << endl; 
 	system("pause");
 	return 0;
