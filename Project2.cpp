@@ -323,12 +323,12 @@ void Decode(string file_Name, Node * Head)
 		file.get(c); //Takes the first character from the given file
 		while (c)
 		{
-			if (cCounter >= 3) break;
+			if (cCounter >= 3) break; // checks to see if it has processed three new lines in a row
 
 			if (c == ' ' || c == '\n') //Case 1
 			{
-				if (c == '\n') cCounter++; 
-				else cCounter = 0; 
+				if (c == '\n') cCounter++; // incriments the counter keeping tabs on the rows
+				else cCounter = 0; // if it is not a newline, the counter is reset to 0 
 
 				space_count++; //Increment space count
 				if (current_Node->val != '#')
@@ -479,7 +479,7 @@ int main() {
 	bool loop = true; // variable to keep the code running until ended by the user
 	
 	// our code allows both the encode and decode functions to take place and are chosen by the user
-	cout << "Please specify whether the file will be Encoded or Decoded from Morse Code. " << endl;
+	cout << "Please specify whether the file will be Encoded to, or Decoded from Morse Code. " << endl;
 	while (loop == true) {
 		// Loop waits for user input after prompting the user for one of three options
 		cout << "Type in either (encode), (decode), or (end) to terminate. " << endl;
@@ -488,21 +488,24 @@ int main() {
 		if (tmp == "encode") {
 			cout << "Please enter the name of the file to Encode: " << endl; // prompt for file enter
 			cin >> file_name;//User input of file to encode
-			
-			file.open(file_name); //opens file based off the 
+			file.open(file_name); //opens file based off the user input
 			file >> noskipws; // allows whitespace and new lines to be read into the encoding function
 			char temp;
+			
+			// if the file is successfully opened, then move onto the the encoding function 
 			if(file) {
 				while (file >> temp) {
-					encode(temp);
+					// call to the encode function which will countinually go through the file
+					// until it has processed all elements within the file. 
+					encode(temp); 
 				}
 			}
 			file.close(); // Close file so that the stream is clear for a new file to be entered
 			cout << endl; // spacer after the encode process
 		}
 		else if (tmp == "decode") { // Code for the Execution of all operations involved with Decode
-			cout << "Please enter the name of the file to Decode: " << endl; 
-			cin >> file_name; 
+			cout << "Please enter the name of the file to Decode: " << endl; // prompt 
+			cin >> file_name; // User input of file name
 			Node * Head = new Node; //Creates Head of tree node
 			Head->val = '#'; //Sets Head's value
 			createTree(Head); //Creates Morse tree off of Head
