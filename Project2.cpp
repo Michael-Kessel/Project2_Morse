@@ -3,13 +3,14 @@
 // Bando Arsene
 // Andrew Fuller
 // Victor Hernandez
-// Project to Encode 
+// Project to Encode and decode text files containing either morse code or english language
 
 #include<iostream>
 #include<fstream>
 #include<string>
 
 using namespace std;
+
 
 //This creates the individual nodes for the binary tree that I am creating. 
 //Each node will have a character value and two children 
@@ -20,6 +21,7 @@ struct Node
 	struct Node * dot_Node = NULL;
 	struct Node * dash_Node = NULL;
 };
+
 
 //This is a function I created that allowed me to easily create the required binary tree.
 //It searches for a node with a specific value within the given tree.
@@ -317,14 +319,20 @@ void Decode(string file_Name, Node * Head)
 	Node * current_Node = Head; //Creates a refrence to the current node so that the fuction can iterate through the tree
 	char c;
 	int space_count = 0; //Tracks the space count, in order to know if there is a new letter or word
+	int cCounter = 0; // Tracks the number of new lines in a row, if it is greater or equal to 3 then the program assumes it has reached the end. 
 	file.open(file_Name); //Opens file
 	if (file) //If the file opens sucessfully, proceed with the decoding
 	{
 		file.get(c); //Takes the first character from the given file
 		while (c)
 		{
+			if (cCounter >= 3) break;
+
 			if (c == ' ' || c == '\n') //Case 1
 			{
+				if (c == '\n') cCounter++; 
+				else cCounter = 0; 
+
 				space_count++; //Increment space count
 				if (current_Node->val != '#')
 				{
@@ -356,8 +364,9 @@ void Decode(string file_Name, Node * Head)
 	return;
 }
 
-void encode(char x) {
-
+void encode(char x) { 
+	// A switch statment is used to go through characters to translate english to morse code
+	// once a case is identified, it output the morse equivilant and ends the function
 	switch (x) {
 	case ' ': cout << "   "; break;
 
@@ -449,6 +458,7 @@ void encode(char x) {
 	case '8': cout << "---.. "; break;
 	case '9': cout << "----. "; break;
 	case '0': cout << "----- "; break;
+
 	case '.': cout << ".-.-.- "; break;
 	case ',': cout << "--..-- "; break;
 	case ';': cout << "-.-.-. "; break;
@@ -457,10 +467,10 @@ void encode(char x) {
 	case '-': cout << "-....- "; break;
 	case '!': cout << "-.-.-- "; break;
 	case '"': cout << ".-..-. "; break; 
-	// case ''': cout << ".----. "; break; 
+	case '\'': cout << ".----. "; break; 
 
 	case '\n': cout << "       "; break;
-	default: cout << "%% ";
+	default: cout << "%% "; // if no case is found, then this is returned so the user knows a character could not be found
 	}
 }
 
@@ -469,14 +479,15 @@ int main() {
 	string file_name, tmp;
 	bool loop = true; 
 	
+	// our code allows both the encode and decode functions to take place and are chosen by the user
 	cout << "Please specify whether the file will be Encoded or Decoded from Morse Code. " << endl;
 	while (loop == true) {
 		cout << "Type in either (encode), (decode), or (end) to terminate. " << endl;
 
 		cin >> tmp;
 		if (tmp == "encode") {
-			cout << "Please enter the name of the file to Encode: " << endl;
-			cin >> file_name;//Name of the file
+			cout << "Please enter the name of the file to Encode: " << endl; // prompt for file enter
+			cin >> file_name;//User input of file to encode
 			
 			file.open(file_name);
 			file >> noskipws;
@@ -485,10 +496,9 @@ int main() {
 			while (file >> temp) {
 				encode(temp);
 			}
-			file.close(); 
-			cout << endl; 
+			file.close(); // Close file so that the stream is clear for a new file to be entered
+			cout << endl; // spacer after the encode process
 		}
-		
 		else if (tmp == "decode") { // Code for the Execution of all operations involved with Decode
 			cout << "Please enter the name of the file to Decode: " << endl; 
 			cin >> file_name; 
@@ -496,15 +506,18 @@ int main() {
 			Head->val = '#'; //Sets Head's value
 			createTree(Head); //Creates Morse tree off of Head
 			Decode(file_name, Head); //Decodes file
-			file.close(); 
+			file.close(); // Close file so that the stream is clear for a new file to be entered
+			cout << endl; // spacer after the decode process
 		}
-		else if (tmp == "end") {
-			loop = false;
+		else if (tmp == "end") { // allows the user to terminate the program when finishd processing files
+			loop = false; // end loop 
 		}
-		else {
+		else { // If anything else is entered besides the three options
 			cout << "Please choose only one of the three options" << endl; 
 		}
 	}
+
+
 	file.close(); // Closes file
 	system("pause");
 	return 0;
