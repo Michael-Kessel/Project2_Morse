@@ -11,6 +11,7 @@
 
 using namespace std;
 
+
 //This creates the individual nodes for the binary tree that I am creating. 
 //Each node will have a character value and two children 
 //(dash and dot nodes which can have values or be NULL).
@@ -20,6 +21,7 @@ struct Node
 	struct Node * dot_Node = NULL;
 	struct Node * dash_Node = NULL;
 };
+
 
 //This is a function I created that allowed me to easily create the required binary tree.
 //It searches for a node with a specific value within the given tree.
@@ -291,6 +293,7 @@ void createTree(Node * Head)
 	tmp = new Node;
 	tmp->val = '0';
 	add_Dash(build_Search(Head, 'O')->dash_Node, tmp);
+
 }
 
 //This is the function I created in order to iterate through the tree.
@@ -308,6 +311,7 @@ Node * Search(char Morse, Node * Head)
 	return Head;
 }
 
+
 //This is the Decode functon that does the most work.
 //Look at the comments throughout the function
 void Decode(string file_Name, Node * Head)
@@ -323,12 +327,12 @@ void Decode(string file_Name, Node * Head)
 		file.get(c); //Takes the first character from the given file
 		while (c)
 		{
-			if (cCounter >= 3) break; // checks to see if it has processed three new lines in a row
+			if (cCounter >= 3) break;
 
 			if (c == ' ' || c == '\n') //Case 1
 			{
-				if (c == '\n') cCounter++; // incriments the counter keeping tabs on the rows
-				else cCounter = 0; // if it is not a newline, the counter is reset to 0 
+				if (c == '\n') cCounter++; 
+				else cCounter = 0; 
 
 				space_count++; //Increment space count
 				if (current_Node->val != '#')
@@ -362,10 +366,8 @@ void Decode(string file_Name, Node * Head)
 }
 
 void encode(char x) { 
-	// A switch statement is used to go through characters to translate English to Morse code
-	// once a case is identified, it outputs the Morse equivalent and ends the function
-	// if a case cannot be found, then the output is "%% " so that the user can 
-	// easily identify characters that were not converted
+	// A switch statment is used to go through characters to translate english to morse code
+	// once a case is identified, it output the morse equivilant and ends the function
 	switch (x) {
 	case ' ': cout << "   "; break;
 
@@ -469,43 +471,39 @@ void encode(char x) {
 	case '\'': cout << ".----. "; break; 
 
 	case '\n': cout << "       "; break;
-	default: cout << "%% ";
+	default: cout << "%% "; // if no case is found, then this is returned so the user knows a character could not be found
 	}
 }
 
 int main() {
-	ifstream file; // File storage
-	string file_name, tmp; // variables for string inputs
-	bool loop = true; // variable to keep the code running until ended by the user
+	ifstream file;
+	string file_name, tmp;
+	bool loop = true; 
 	
 	// our code allows both the encode and decode functions to take place and are chosen by the user
-	cout << "Please specify whether the file will be Encoded to, or Decoded from Morse Code. " << endl;
+	cout << "Please specify whether the file will be Encoded or Decoded from Morse Code. " << endl;
 	while (loop == true) {
-		// Loop waits for user input after prompting the user for one of three options
 		cout << "Type in either (encode), (decode), or (end) to terminate. " << endl;
 
 		cin >> tmp;
 		if (tmp == "encode") {
 			cout << "Please enter the name of the file to Encode: " << endl; // prompt for file enter
 			cin >> file_name;//User input of file to encode
-			file.open(file_name); //opens file based off the user input
-			file >> noskipws; // allows whitespace and new lines to be read into the encoding function
-			char temp;
 			
-			// if the file is successfully opened, then move onto the the encoding function 
-			if(file) {
+			file.open(file_name);
+			file >> noskipws;
+			char temp;
+			if (file) {
 				while (file >> temp) {
-					// call to the encode function which will countinually go through the file
-					// until it has processed all elements within the file. 
-					encode(temp); 
+					encode(temp);
 				}
 			}
 			file.close(); // Close file so that the stream is clear for a new file to be entered
 			cout << endl; // spacer after the encode process
 		}
 		else if (tmp == "decode") { // Code for the Execution of all operations involved with Decode
-			cout << "Please enter the name of the file to Decode: " << endl; // prompt 
-			cin >> file_name; // User input of file name
+			cout << "Please enter the name of the file to Decode: " << endl; 
+			cin >> file_name; 
 			Node * Head = new Node; //Creates Head of tree node
 			Head->val = '#'; //Sets Head's value
 			createTree(Head); //Creates Morse tree off of Head
@@ -520,7 +518,6 @@ int main() {
 			cout << "Please choose only one of the three options" << endl; 
 		}
 	}
-
 
 	file.close(); // Makes sure that the file the program is using is closed before ending
 	return 0;
