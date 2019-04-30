@@ -490,11 +490,12 @@ int main() {
 			cout << "Please enter the name of the file to Encode: " << endl; // prompt for file enter
 			cin >> file_name;//User input of file to encode
 			
-			file.open(file_name);
-			file >> noskipws;
+			file.open(file_name); // opens the file with the user input string
+			file >> noskipws; // allows whitespace and newl line characters to be read into encode
 			char temp;
 			if (file) {
 				while (file >> temp) {
+					// a single character is taken from the file and enterented into the loop
 					encode(temp);
 				}
 			}
